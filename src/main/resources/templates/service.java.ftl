@@ -2,6 +2,8 @@ package ${package.Service};
 
     import ${package.Entity}.${entity};
     import ${superServiceClassPackage};
+    import java.util.List;
+    import java.util.Map;
 
     /**
     * <p>

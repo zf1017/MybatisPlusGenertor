@@ -5,6 +5,9 @@ package ${package.ServiceImpl};
     import ${package.Service}.${table.serviceName};
     import ${superServiceImplClassPackage};
     import org.springframework.stereotype.Service;
+    import javax.transaction.Transactional;
+    import org.apache.commons.lang3.StringUtils;
+    import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
     /**
     * <p>
@@ -15,7 +18,7 @@ package ${package.ServiceImpl};
     * @since ${date}
     */
     @Service
-    @@Transactional
+    @Transactional
     @Slf4j
 <#if kotlin>
     open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
@@ -27,7 +30,7 @@ package ${package.ServiceImpl};
     @Autowired
     private ${table.mapperName} mapper;
     @Override
-    public Map<String, Object> getUserList(Integer pageNum, Integer pageSize,String userName) {
+    public Map<String, Object> list(Integer pageNum, Integer pageSize,String userName) {
 
     QueryWrapper<${entity}> wrapper = new QueryWrapper<>();
     if(StringUtils.isNotBlank(userName)){
@@ -35,7 +38,7 @@ package ${package.ServiceImpl};
     }
     // wrapper.eq("SA007",1);
     //wrapper.orderByDesc("SA003");
-    IPage<${entity}> iPage = st4SysSaMapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
+    IPage<${entity}> iPage = mapper.selectPage(new Page<>(pageNum, pageSize), wrapper);
 
 
     Map<String, Object> result = new HashMap<>();
@@ -57,10 +60,10 @@ package ${package.ServiceImpl};
 
     }
 
-    }
+
 
     @Override
-    public void editUser(${entity} entity) {
+    public void edit(${entity} entity) {
         //具体逻辑
     }
 

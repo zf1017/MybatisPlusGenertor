@@ -37,7 +37,7 @@ public class MainGenerator  {
         AutoGenerator mpg = new AutoGenerator().setGlobalConfig(
                 // 全局配置
                 new GlobalConfig()
-                        .setOutputDir("D:\\IdeaWorkspace\\src\\main\\java")//输出目录
+                        .setOutputDir("D:/")//输出目录
                         .setFileOverride(true)// 是否覆盖文件
                         .setActiveRecord(true)// 开启 activeRecord 模式
                         .setEnableCache(false)// XML 二级缓存
@@ -70,7 +70,7 @@ public class MainGenerator  {
                         .setDriverName("com.mysql.cj.jdbc.Driver")
                         .setUsername("root")
                         .setPassword("root")
-                        .setUrl("jdbc:mysql://192.168.1.158:3306/test?characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                        .setUrl("jdbc:mysql://192.168.1.62:3306/anhuiepr?characterEncoding=utf8&serverTimezone=Asia/Shanghai")
         ).setStrategy(
                 // 策略配置
                 new StrategyConfig()
@@ -80,7 +80,7 @@ public class MainGenerator  {
                         .setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
                         .setColumnNaming(NamingStrategy.underline_to_camel)//字段名生成策略
                         .setEntityLombokModel(true)
-                         .setInclude(new String[] { "sys_user" }) // 需要生成的表
+                         .setInclude(new String[] { "rlhd_group" }) // 需要生成的表
                         // .setExclude(new String[]{"test"}) // 排除生成的表
                         // 自定义实体父类
                         // .setSuperEntityClass("com.baomidou.demo.TestEntity")
@@ -111,7 +111,7 @@ public class MainGenerator  {
         ).setPackageInfo(
                 // 包配置
                 new PackageConfig()
-                        .setModuleName("environment")
+//                        .setModuleName("environment")
                         .setParent("com.gistone")// 自定义包路径
                         .setController("controller")// 这里是控制器包名，默认 web
         ).setCfg(
@@ -128,7 +128,7 @@ public class MainGenerator  {
                     // 自定义输出文件目录
                     @Override
                     public String outputFile(TableInfo tableInfo) {
-                        return "D:/IdeaWorkspace/src/main/java/mapper/xml/" + tableInfo.getEntityName() + ".xml";
+                        return "D:/mapper/" + tableInfo.getEntityName() + ".xml";
                     }
                 }))
         ).setTemplate(

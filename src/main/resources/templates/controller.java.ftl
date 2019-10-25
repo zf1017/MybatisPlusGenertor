@@ -3,8 +3,6 @@ package ${package.Controller};
 
     import org.springframework.web.bind.annotation.*;
     import org.springframework.beans.factory.annotation.Autowired;
-    import com.ycj.oe.service.${table.serviceName};
-    import com.ycj.oe.entity.${entity};
     import io.swagger.annotations.Api;
     import io.swagger.annotations.ApiOperation;
     import org.slf4j.Logger;
@@ -12,6 +10,7 @@ package ${package.Controller};
     import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
     import base.ResponseObj;
     import java.util.List;
+    import java.util.Map;
 <#if restControllerStyle>
     import org.springframework.web.bind.annotation.RestController;
 <#else>
@@ -45,12 +44,11 @@ package ${package.Controller};
     <#else>
         public class ${table.controllerName} {
     </#if>
-    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private ${table.serviceName} service;
 
     @PostMapping("/list")
-    public ResultVO getUserList(@RequestBody Map<String, Object> params) {
+    public ResultVO getList(@RequestBody Map<String, Object> params) {
 
     Integer pageNum = (Integer) params.get("pageNum");
     Integer pageSize = (Integer) params.get("pageSize");
@@ -85,15 +83,15 @@ public ResultVO add(@RequestBody ${entity} entity, BindingResult bindingResult){
     return ResultVOUtil.error(ResultEnum.ERROR.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
     }
     //判断添加人是否为空
-    service.insert(entity)
+    service.insert(entity);
 return  ResultVOUtil.success();
 }
 
 
-@RequestMapping(value = "/del")
-public ResponseWeb<String> delete(@RequestBody Map<String, Object> params){
-    List<Integer> id = (List<Integer>) params.get("ids");
-    if (ListUtil.isNull(id)) {
+@RequestMapping(value = "/delete")
+public ResultVO delete(@RequestBody Map<String, Object> params){
+    List<Integer> id = (List<Integer>) params.get("id");
+    if (id!=null&&id.size()>0) {
     return ResultVOUtil.error(ResultEnum.ERROR.getCode(), "id不能为空");
     }
     service.delete(id);
@@ -102,7 +100,7 @@ public ResponseWeb<String> delete(@RequestBody Map<String, Object> params){
 
 
 @RequestMapping(value = "/update", method = RequestMethod.POST)
-public ResponseWeb<${entity}> update(@RequestBody ${entity} entity,BindingResult bindingResult){
+public ResultVO update(@RequestBody ${entity} entity,BindingResult bindingResult){
 if (bindingResult.hasErrors()) {
 return ResultVOUtil.error(ResultEnum.ERROR.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
 }
